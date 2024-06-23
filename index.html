@@ -40,6 +40,25 @@
                 gap: 1rem;
             }
         }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        .tab {
+            padding: 1rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        .tab.active {
+            border-bottom: 2px solid #007BFF;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -54,44 +73,57 @@
         </ul>
     </nav>
     <main class="container">
-        <div class="grid">
-            <section>
-                <hgroup>
-                    <h2>Welcome to Math Challenge</h2>
-                    <h3>Sharpen your math skills!</h3>
-                </hgroup>
-                <p>Solve the math problems below and click "Next" to get a new problem. Good luck!</p>
-            </section>
+        <div class="tabs">
+            <div class="tab active" onclick="openTab(event, 'tab1')">Math Problems</div>
+            <div class="tab" onclick="openTab(event, 'tab2')">Placeholders</div>
         </div>
-        <div class="placeholders">
-            <div class="placeholder">
-                <h3>Math Problem</h3>
-                <p class="math-problem" id="mathProblem">5 + 3 = ?</p>
-                <input type="text" id="answer" name="answer" placeholder="Enter your answer" required />
-                <button type="button" onclick="checkAnswer()">Submit</button>
-                <p class="feedback" id="feedback"></p>
-                <button type="button" onclick="generateProblem()">Next</button>
-                <p class="score" id="score">Score: 0</p>
+        <div id="tab1" class="tab-content active">
+            <div class="grid">
+                <section>
+                    <hgroup>
+                        <h2>Welcome to Math Challenge</h2>
+                        <h3>Sharpen your math skills!</h3>
+                    </hgroup>
+                    <p>Solve the math problems below and click "Next" to get a new problem. Good luck!</p>
+                </section>
             </div>
-            <div class="placeholder">
-                <h3>Timed Math Challenge</h3>
-                <p id="timer">Time: 60</p>
-                <p class="math-problem" id="timedMathProblem">5 + 3 = ?</p>
-                <input type="text" id="timedAnswer" name="timedAnswer" placeholder="Enter your answer" required disabled />
-                <button type="button" id="startButton" onclick="startTimedChallenge()">Start</button>
-                <button type="button" id="timedSubmitButton" onclick="checkTimedAnswer()" disabled>Submit</button>
-                <p class="feedback" id="timedFeedback"></p>
-                <p class="score" id="timedScore">Score: 0</p>
+            <div class="placeholders">
+                <div class="placeholder">
+                    <h3>Math Problem</h3>
+                    <p class="math-problem" id="mathProblem">5 + 3 = ?</p>
+                    <input type="text" id="answer" name="answer" placeholder="Enter your answer" required />
+                    <button type="button" onclick="checkAnswer()">Submit</button>
+                    <p class="feedback" id="feedback"></p>
+                    <button type="button" onclick="generateProblem()">Next</button>
+                    <p class="score" id="score">Score: 0</p>
+                </div>
+                <div class="placeholder">
+                    <h3>Timed Math Challenge</h3>
+                    <p id="timer">Time: 60</p>
+                    <p class="math-problem" id="timedMathProblem">5 + 3 = ?</p>
+                    <input type="text" id="timedAnswer" name="timedAnswer" placeholder="Enter your answer" required disabled />
+                    <button type="button" id="startButton" onclick="startTimedChallenge()">Start</button>
+                    <button type="button" id="timedSubmitButton" onclick="checkTimedAnswer()" disabled>Submit</button>
+                    <p class="feedback" id="timedFeedback"></p>
+                    <p class="score" id="timedScore">Score: 0</p>
+                </div>
+                <div class="placeholder">
+                    <h3>Harder Timed Math Challenge</h3>
+                    <p id="hardTimer">Time: 60</p>
+                    <p class="math-problem" id="hardMathProblem">23 + 47 = ?</p>
+                    <input type="text" id="hardAnswer" name="hardAnswer" placeholder="Enter your answer" required disabled />
+                    <button type="button" id="hardStartButton" onclick="startHardChallenge()">Start</button>
+                    <button type="button" id="hardSubmitButton" onclick="checkHardAnswer()" disabled>Submit</button>
+                    <p class="feedback" id="hardFeedback"></p>
+                    <p class="score" id="hardScore">Score: 0</p>
+                </div>
             </div>
-            <div class="placeholder">
-                <h3>Harder Timed Math Challenge</h3>
-                <p id="hardTimer">Time: 60</p>
-                <p class="math-problem" id="hardMathProblem">23 + 47 = ?</p>
-                <input type="text" id="hardAnswer" name="hardAnswer" placeholder="Enter your answer" required disabled />
-                <button type="button" id="hardStartButton" onclick="startHardChallenge()">Start</button>
-                <button type="button" id="hardSubmitButton" onclick="checkHardAnswer()" disabled>Submit</button>
-                <p class="feedback" id="hardFeedback"></p>
-                <p class="score" id="hardScore">Score: 0</p>
+        </div>
+        <div id="tab2" class="tab-content">
+            <div class="placeholders">
+                <div class="placeholder"></div>
+                <div class="placeholder"></div>
+                <div class="placeholder"></div>
             </div>
         </div>
     </main>
@@ -343,6 +375,19 @@
             scoreDisplay.textContent = `Score: ${hardScore}`;
             hardAnswered = true;
             generateHardProblem();
+        }
+
+        function openTab(event, tabId) {
+            const tabs = document.getElementsByClassName('tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
         }
 
         window.onload = generateProblem;

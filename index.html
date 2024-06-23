@@ -201,7 +201,7 @@
         function startTimedChallenge() {
             document.getElementById('timedAnswer').disabled = false;
             document.getElementById('timedSubmitButton').disabled = false;
-            document.getElementById('startButton').disabled = true;
+            document.getElementById('startButton').style.display = 'none';
             timeLeft = 60;
             document.getElementById('timer').textContent = `Time: ${timeLeft}`;
             timer = setInterval(updateTimer, 1000);
@@ -213,7 +213,7 @@
                 clearInterval(timer);
                 document.getElementById('timedAnswer').disabled = true;
                 document.getElementById('timedSubmitButton').disabled = true;
-                document.getElementById('startButton').disabled = false;
+                document.getElementById('startButton').style.display = 'inline-block';
                 document.getElementById('timedFeedback').textContent = 'Time is up!';
             } else {
                 timeLeft--;

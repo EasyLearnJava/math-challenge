@@ -203,7 +203,9 @@
             document.getElementById('timedSubmitButton').disabled = false;
             document.getElementById('startButton').style.display = 'none';
             timeLeft = 60;
+            timedScore = 0;
             document.getElementById('timer').textContent = `Time: ${timeLeft}`;
+            document.getElementById('timedScore').textContent = `Score: ${timedScore}`;
             timer = setInterval(updateTimer, 1000);
             generateTimedProblem();
         }
